@@ -1,0 +1,33 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="/auth/login" method="POST">
+              <div class="">
+                <h1>Register</h1>
+                <hr>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="">Email</label>
+                        <div>
+                            <input type="text" name="username" value="">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label for="">Password</label>
+                        <div>
+                            <input type="password" name="password" value="">
+                        </div>
+                    </div>
+                </div>
+                    <br>
+                    <button class="btn btn-small btn-primary" type="submit">Login</button>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

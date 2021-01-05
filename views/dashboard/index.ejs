@@ -1,0 +1,120 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+  <div class="row d-flex justify-content-center">
+  <% user.blocks.forEach((block) => { %>
+      <div class="col-6">
+      <br>
+      <div class="card">
+        <div class="card-header text-center">
+        <div>
+          <%= block.name %>
+        </div>
+          <% if(block.income === true) { %>
+            <div>
+              <label for="">Income</label>
+            </div>
+          <% } else { %>
+            <label for="">Outgoing</label>
+          <% } %>
+          <div>
+          </div>
+          <form action="/blocks/<%= block.id %>/delete?_method=DELETE" method="POST">
+            <button type="submit" class="no-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Ammount</th>
+              <th scope="col">Paid</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+             <% block.monies.forEach((money) => { %>
+              <tr>
+                <td> <%= money.name %></td>
+                <td> <%= money.dueDate %></td>
+                <td> <%= money.ammount %></td>
+                <td>
+                  <form action="/money/<%= money.id %>/paid?_method=PUT" method="POST">
+                    <input type="checkbox" name="paid" value="true" <% if(money.paid === true) { %> checked <% } %> onclick="javascript: submit()">
+                  </form>
+                </td>
+                <td>
+                  <form action="/money/<%= money.id %>/delete?_method=DELETE" method="POST">
+                    <button type="submit" class="no-button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                      </svg>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+             <% }) %>
+          </tbody>
+        </table>
+        <table class="text-center">
+          <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Ammount</th>
+            <th scope="col"></th>
+          </thead>
+          <tbody>
+            <tr>
+              <form action="/money/<%= block.id %>/new" method="POST">
+                <td><input type="text" name="name" required></td>
+                <td><input type="date" name="dueDate" required></td>
+                <td><input type="text" name="ammount" required></td>
+                <td>
+                  <button type="submit" class="no-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                  </button>
+                </td>
+              </form>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+
+        </div>
+      </div>
+    </div>
+    <% }) %>
+    <b class="head-room"></b>
+    <hr>
+  </div>
+  <div class="row text-center head-room">
+      <div class="col d-flex justify-content-center">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Create New Block</h5>
+            <form action="/blocks/<%= user.id %>/new" method="POST">
+                <label for="">Block Name</label>
+                <input type="text" name="name" required>
+                <br>
+                <label for="">Type of Block</label>
+                <div required>
+                    <input type="radio" name="income" value="true" required>Income
+                    <input type="radio" name="income" value="false" required>Payments
+                </div>
+                <br>
+                <button href="#" class="btn btn-sm btn-primary">New Block</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<%- include('../partials/header') %>
