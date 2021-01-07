@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const middleware = require('../middleware/index');
 const Block = require('../models/Block');
 const Money = require('../models/Money');
 const User = require('../models/Users');
@@ -60,7 +61,7 @@ cron.schedule('* 9 * * *', () => {
     });
 });
 
-router.post('/:id/new', function (req, res) {
+router.post('/:id/new', middleware.checkProfileOwnership, function (req, res) {
     Block.findById(req.params.id, (err, foundBlock) => {
         if(err){
             console.log(err)
@@ -84,16 +85,16 @@ router.post('/:id/new', function (req, res) {
     });
 });
 
-router.put('/:id/paid', (req, res) => {
+router.put('/:id/paid', middleware.checkProfileOwnership, (req, res) => {
     Money.findById(req.params.id, (err, foundMoney) => {
         if(err){console.log(err)}
         foundMoney.paid = req.body.paid;
         foundMoney.save();
         res.redirect('back');
-    })
-})
+    });
+});
 
-router.delete('/:money_id/delete', (req, res) => {
+router.delete('/:money_id/delete', middleware.checkProfileOwnership, (req, res) => {
     Money.findByIdAndDelete(req.params.money_id, (err) => {
         if(err){console.log(err)}
         res.redirect('back');

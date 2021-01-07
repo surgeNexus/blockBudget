@@ -16,7 +16,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost:27017/budget');
+mongoose.connect(process.env.MONGODB);
 
 var indexRoutes = require('./routes/index');
 var authRoutes = require('./routes/auth');

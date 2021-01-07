@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const middleware = require('../middleware/index');
 const moment = require('moment');
 const cron = require('node-cron');
 const User = require('../models/Users');
@@ -11,14 +12,14 @@ router.get('/', function (req, res) {
 });
 
 router.get('/dashboard', (req, res) => {
-  if(req.user){
+  if(req.user && middleware.isLoggedIn){
     res.redirect('/dashboard/' + req.user.id);
   } else {
     res.redirect('/auth/login');
   }
 })
 
-router.get('/dashboard/:id', (req, res) => {
+router.get('/dashboard/:id', middleware.isLoggedIn, (req, res) => {
   User.findById(req.params.id)
   .populate({
     path: 'blocks',
