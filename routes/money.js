@@ -2,21 +2,59 @@ const express = require('express');
 const router = express.Router();
 const Block = require('../models/Block');
 const Money = require('../models/Money');
+const User = require('../models/Users');
 const moment = require('moment');
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 
 const today = moment().format('yyyy-MM-DD');
 
-cron.schedule('30 * * * * *', () => {
-    Money.find({}, (err, foundMoney) => {
+cron.schedule('* 9 * * *', () => {
+    User.find({})
+    .populate({
+        path: 'blocks',
+        populate: {
+          model: Money,
+          path: 'monies',
+          options: {
+            sort: ({ dueDate: 'asc' })
+          }
+        },
+      })
+    .exec((err, foundUser) => {
         if(err){
             console.log(err);
         } else {
-            foundMoney.forEach((money) => {
-                if(money.dueDate === today){
-                    console.log(money.dueDate)
-                }
+            foundUser.forEach((user) => {
+                user.blocks.forEach((block) => {
+                    block.monies.forEach((money) => {
+                        if(money.dueDate === today && income === 'outgoing' && paid === false){
+                            var smtpTransport = nodemailer.createTransport({
+                                service: 'Gmail',
+                                auth: {
+                                  user: process.env.GMAILUSER,
+                                  pass: process.env.GMAILPW
+                                }
+                            });
+                            var mailOptions = {
+                              to: user.username,
+                              from: 'surgenexus.app@gmail.com',
+                              subject:
+                                'BUDGET',
+                              text:
+                                'Your bill ' +
+                                money.name.toUpperCase() +
+                                ' is due today in the amount of' + 
+                                money.ammount + '.'
+                            };
+                            smtpTransport.sendMail(mailOptions, function (err) {
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+                        }
+                    })
+                })
             });
         }
     });
@@ -31,7 +69,7 @@ router.post('/:id/new', function (req, res) {
                 name: req.body.name,
                 dueDate: req.body.dueDate,
                 ammount: req.body.ammount,
-                income: foundBlock.income
+                moneyType: foundBlock.moneyType
             }
             Money.create(newMoney, (err, money) => {
                 if(err){

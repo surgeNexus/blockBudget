@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var BlockSchema = new mongoose.Schema({
     name: String,
-    income: { type: Boolean, default: false },
+    moneyType: String,
     authorId: String,
     monies: [
         {
@@ -10,6 +10,7 @@ var BlockSchema = new mongoose.Schema({
           ref: "Blocks"
         }
     ],
+    total: Number
 })
 
 module.exports = mongoose.model('Blocks', BlockSchema);

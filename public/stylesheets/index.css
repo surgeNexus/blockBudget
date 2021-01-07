@@ -1,11 +1,11 @@
-/* body {
+body {
     color: white;
     background-color: black;
 }
 
-h1, h2, h3, h4, h5, h6, .card-header, label {
+h1, h2, h3, h4, h5, h6, th, p, .card-header, label {
     color: black;
-} */
+}
 
 .no-button {
     background: none;
@@ -19,4 +19,12 @@ h1, h2, h3, h4, h5, h6, .card-header, label {
 
 .head-room {
     padding-top: 40px;
+}
+
+.foot-room {
+    padding-bottom: 20px;
+}
+
+.white {
+    color: white;
 }

@@ -6,6 +6,10 @@ var UserSchema = new mongoose.Schema({
   lastName: String,
   username: String,
   password: String,
+  alert: {type: Boolean, default: false},
+  alertDays: Number,
+  email2: String,
+  email3: String,
   blocks: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -22,6 +22,7 @@ var indexRoutes = require('./routes/index');
 var authRoutes = require('./routes/auth');
 var blockRoutes = require('./routes/blocks');
 var moneyRoutes = require('./routes/money');
+var settingsRoutes = require('./routes/settings');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -55,6 +56,7 @@ app.use(indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/blocks', blockRoutes);
 app.use('/money', moneyRoutes);
+app.use('/settings', settingsRoutes);
 
 app.listen(3000, function () {
   console.log('Do your bills!');

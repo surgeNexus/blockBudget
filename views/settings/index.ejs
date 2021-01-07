@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="white text-center">Settings</h1>
+            <hr>
+        </div>
+    </div>
+</div>
+<div class="col text-center">
+    <form action="/auth/login" method="POST">
+        <br>
+        <div class="row">
+            <div class="col">
+                <label style="color: white" for="">Fist Name</label>
+                <input type="text" name="firstName" value="<%= user.firstName %>">
+            </div>
+            <div class="col">
+                <label style="color: white" for="">Last Name</label>
+                <input type="text" name="lastName" value="<%= user.lastName %>">
+            </div>
+            <br>
+        </div>
+        <br>
+        <br>
+        <button class="btn btn-small btn-primary" type="submit">Login</button>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

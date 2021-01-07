@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 
 var MoneySchema = new mongoose.Schema({
   name: String,
-  ammount: String,
+  ammount: Number,
   dueDate: String,
-  income: { type: Boolean, default: false },
+  moneyType: String,
   paid: { type: Boolean, default: false },
+  authorId: String
 });
 
 module.exports = mongoose.model('Money', MoneySchema);

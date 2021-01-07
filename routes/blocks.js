@@ -10,7 +10,7 @@ router.post('/:id/new', function (req, res) {
       } else {
           var newBlock = {
               name: req.body.name,
-              income: req.body.income,
+              moneyType: req.body.moneyType,
               authorId: foundUser.id
           }
           Block.create(newBlock, (err, block) => {
