@@ -58,6 +58,6 @@ app.use('/blocks', blockRoutes);
 app.use('/money', moneyRoutes);
 app.use('/settings', settingsRoutes);
 
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
   console.log('Do your bills!');
 });
